@@ -1,0 +1,50 @@
+import java.io.BufferedReader;
+import java.io.Console;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+
+public class Program {
+   static BufferedReader  br=new BufferedReader(new InputStreamReader(System.in));
+	public static void main(String args[] ) throws Exception {		
+		 int n=Integer.parseInt( br.readLine());
+		 int[] coins=Arrays.stream(br.readLine().split(" ")).mapToInt(x->Integer.parseInt(x)).toArray();
+		System.out.println(coinChangeProb(n,coins,2));
+	}
+	
+	static int coinChangeProb(int n,int[] coins)
+	{
+		int[] rs=new int[n+1];
+		rs[0]=1;
+		for(int i=0;i<coins.length;i++)
+		{
+			for(int j=1;j<=n;j++)
+			{
+				if(j>=coins[i])
+				{
+					rs[j]=rs[j]+rs[j-coins[i]];
+				}
+			}
+		}
+		return rs[n];
+	}
+	static int coinChangeProb(int n,int[] coins,int m)
+	{
+		if(n==0)
+			return 1;
+		if(n<0)
+			return 0;
+		if(n>0 && m<0)
+			return 0;
+		
+		return coinChangeProb(n-coins[m],coins,m)+coinChangeProb(n,coins,m-1);
+	}
+
+}
