@@ -1,0 +1,58 @@
+//https://practice.geeksforgeeks.org/problems/longest-common-subsequence-1587115620/1#
+
+
+import java.io.BufferedReader;
+import java.io.Console;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+
+public class Program {
+   static BufferedReader  br=new BufferedReader(new InputStreamReader(System.in));
+	public static void main(String args[] ) throws Exception {		
+		 int t=Integer.parseInt( br.readLine());
+		 while(t-->0)
+		 {
+			 int p=Integer.parseInt( br.readLine());
+			 int q=Integer.parseInt( br.readLine());
+			 String s1=br.readLine();
+			 String s2=br.readLine();
+		 	 System.out.println(lcs(p, q, s1, s2));
+		
+		 }
+		
+		
+	}
+	
+	 static int lcs(int p, int q, String s1, String s2){
+	       int[] rs=new int[q+1];
+	       for(int i=1;i<=p;i++)
+	       {
+	    	   int bkp=rs[0];
+	    	   int bkpt=rs[0];
+	    	   for(int j=1;j<=q;j++)
+	    	   {    
+	    		   bkpt=rs[j];
+	    		   if(s1.charAt(i-1)==s2.charAt(j-1))
+	    		   {
+	    			   rs[j]=bkp+1;
+	    			  
+	    		   }
+	    		   else
+	    		   {
+	    			   rs[j]=Math.max(rs[j-1], rs[j]);
+	    			   
+	    		   }
+	    		   bkp=bkpt;
+	    	   }
+	       }
+	       return rs[q];
+	    }
+}
