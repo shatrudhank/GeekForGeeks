@@ -1,0 +1,122 @@
+// { Driver Code Starts
+//https://practice.geeksforgeeks.org/problems/box-stacking/1#
+
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class gfg
+{
+    public static void main (String[] args) {
+    Scanner sc = new Scanner(System.in);
+    int t = sc.nextInt();
+    
+    //sc.next();
+    while(t-- > 0)
+    {
+        int n = sc.nextInt();
+        
+        int A[]  =new int[1000];
+        int B[] = new int[1000];
+        int C[] = new int[1000];
+        
+        for(int i = 0; i < n; i++)
+        {
+            int a =sc.nextInt();
+            int b = sc.nextInt();
+            int c = sc.nextInt();
+            
+            A[i] = a;
+            B[i] = b;
+            C[i] = c;
+        }
+        
+        Geeks ob = new Geeks();
+        System.out.println(ob.maxHeight(A,B,C,n));
+    }
+   }
+}// } Driver Code Ends
+
+
+//User function Template for Java
+
+
+
+class Geeks 
+{
+ public static long maxHeight(int h[], int w[], int l[], int n)
+	   {
+	       int[] fl=new int[3*n];
+	       int[] fw=new int[3*n];
+	       int[] fh=new int[3*n];
+	       long[] a=new long[3*n];
+	       for(int i=0;i<n;i++)
+	       {
+	    	   fl[i]=l[i];
+	    	   fw[i]=w[i];
+	    	   fh[i]=h[i];
+	    	   a[i]=l[i]*w[i];
+	    	   
+	    	   fl[n+i]=h[i];
+	    	   fw[n+i]=w[i];
+	    	   fh[n+i]=l[i];
+	    	   a[n+i]=h[i]*w[i];
+	       
+	    	   fl[2*n+i]=l[i];
+	    	   fw[2*n+i]=h[i];
+	    	   fh[2*n+i]=w[i];
+	    	   a[2*n+i]=l[i]*h[i];
+	    	   
+	       }
+	    
+	       for(int i=0;i<3*n-1;i++)
+	       {
+	    	   for(int j=0;j<3*n-1-i;j++)
+	    	   {
+	    		   if(a[j]<a[j+1])
+	    		   {
+	    			   int tl=fl[j];
+	    			   fl[j]=fl[j+1];
+	    			   fl[j+1]=tl;
+	    			   
+	    			   int tw=fw[j];
+	    			   fw[j]=fw[j+1];
+	    			   fw[j+1]=tw;
+	    			   
+	    			   int th=fh[j];
+	    			   fh[j]=fh[j+1];
+	    			   fh[j+1]=th;
+	    			   
+	    			   long ta=a[j];
+	    			   a[j]=a[j+1];
+	    			   a[j+1]=ta;
+	    		   }
+	    	   }
+	       }
+	       
+	       long[] rs=new long[3*n+1];
+	       for(int i=0;i<3*n;i++)
+	       {
+	    	   rs[i]=fh[i];
+	       }
+	       for(int i=1;i<3*n;i++)
+	       {
+	    	   for(int j=0;j<i;j++)
+	    	   {
+	    		   if(((fl[j]>fl[i] && fw[j]>fw[i] ) || (fl[j]>fw[i] && fw[j]>fl[i] ))&& rs[i]<rs[j]+fh[i])
+	    		   {
+	    			   rs[i]=rs[j]+fh[i];
+	    		   }
+	    	   }
+	       }
+	       long max=Long.MIN_VALUE;
+	       for(int i=0;i<3*n;i++)
+	       {
+	    	   if(max<rs[i])
+	    		   max=rs[i];
+	       } 
+	       return max;
+	   }
+}
+
