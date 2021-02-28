@@ -1,0 +1,48 @@
+//https://practice.geeksforgeeks.org/problems/ways-to-tile-a-floor5836/1
+
+import java.io.BufferedReader;
+import java.io.Console;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+
+public class Program {
+   static BufferedReader  br=new BufferedReader(new InputStreamReader(System.in));
+	public static void main(String args[] ){	
+		try
+		{
+	  	   int n=Integer.parseInt( br.readLine());
+	  	   System.out.println(numberOfWays(n));
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		
+	}
+	
+	
+
+	  static Long numberOfWays(int n) 
+	  {
+	      long[] rs=new long[n+1];
+	      for(int i=0;i<=n;i++)
+	      {
+	    	  if(i<=2)
+	    		  rs[i]=i;
+	    	  else
+	    	  {
+	    		  rs[i]=(rs[i-1]+rs[i-2])%1000000007;
+	    	  }
+	      }
+		  return rs[n];
+	  }
+	
+}
